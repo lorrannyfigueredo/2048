@@ -1,23 +1,69 @@
+body {
+  background-color: #faf8ef82;
+  display: flex;
+  justify-content: center;
+  font-family: "Clear Sans", "Helvetica Neue", sans-serif; 
+}
+
+h1 {
+  font-size: 70px;
+  color: #665d55;
+  margin: 0px;
+}
+
+.container {
+  width: 468px;
+  margin-top: 15px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.score-container {
+  text-align: center;
+  width: 100px;
+  height: 70px;
+  border-radius: 3px;
+  background-color: #665d55;
+  color: #FFFFFF;
+}
+
+.score-title {
+  font-size: 27px;
+} 
+
+#score {
+  font-size: 30px;
+}
+
 .grid {
   display: flex;
   flex-wrap: wrap;
   width: 456px;
   height: 456px;
-  background-color: #BBADA0;
-  border: 7px solid #BBADA0;
+  background-color: #665d55;
+  border: 7px solid #665d55;
   border-radius: 6px;
   margin-top: 20px;
 }
 
+div, span {
+  text-align: center;
+}
+
 .grid div {
-  width: 100px;
+  width: 100px; 
   height: 100px;
   margin: 7px;
   border-radius: 3px;
   background-color: #EEE4DA;
-  color: #afa192;
+  color: #eee4da;
   font-weight: bold;
-  text-align: center;
   font-size: 60px;
+  text-align: center;
   line-height: 1.6;
 }

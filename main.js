@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   //create the playing board
   function createBoard() {
     for (let i=0; i < width*width; i++) {
-      square = document.createElement('div');
+      let square = document.createElement('div');
       square.innerHTML = 0;
       gridDisplay.appendChild(square);
       squares.push(square);
@@ -18,57 +18,53 @@ document.addEventListener('DOMContentLoaded', () => {
     generate()
   }
   createBoard()
-
+  
   //generate a new number
   function generate() {
-    randomNumber = Math.floor(Math.random() * squares.length)
+    randomNumber = Math.floor(Math.random() * squares.length);
     if (squares[randomNumber].innerHTML == 0) {
-      squares[randomNumber].innerHTML = 2
-    } else { 
+      squares[randomNumber].innerHTML = 2;
+    } else {
       generate()
     }  
   }
 
   function moveRight() {
-    for (let i=0; i < 16; i++) {
-      if (i % 4 === 0) {
-        let totalOne = squares[i].innerHTML
-        let totalTwo = squares[i+1].innerHTML
-        let totalThree = squares[i+2].innerHTML
-        let totalFour = squares[i+3].innerHTML
-        let row = [parseInt(totalOne), parseInt(totalTwo), parseInt(totalThree), parseInt(totalFour)]
+    for (let i=0; i < 13; i+=4) {
+      let totalOne = squares[i].innerHTML
+      let totalTwo = squares[i+1].innerHTML
+      let totalThree = squares[i+2].innerHTML
+      let totalFour = squares[i+3].innerHTML
+      let row = [parseInt(totalOne), parseInt(totalTwo), parseInt(totalThree), parseInt(totalFour)]
 
-        let filteredRow = row.filter(num => num)
-        let missing = 4 - filteredRow.length
-        let zeros = Array(missing).fill(0)
-        let newRow = zeros.concat(filteredRow)
+      let filteredRow = row.filter(num => num)
+      let missing = 4 - filteredRow.length
+      let zeros = Array(missing).fill(0)
+      let newRow = zeros.concat(filteredRow)
 
-        squares[i].innerHTML = newRow[0]
-        squares[i +1].innerHTML = newRow[1]
-        squares[i +2].innerHTML = newRow[2]
-        squares[i +3].innerHTML = newRow[3]
-      }
+      squares[i].innerHTML = newRow[0]
+      squares[i +1].innerHTML = newRow[1]
+      squares[i +2].innerHTML = newRow[2]
+      squares[i +3].innerHTML = newRow[3]
     }
   }
   function moveLeft() {
-    for (let i=0; i < 16; i++) {
-      if (i % 4 === 0) {
-        let totalOne = squares[i].innerHTML
-        let totalTwo = squares[i+1].innerHTML
-        let totalThree = squares[i+2].innerHTML
-        let totalFour = squares[i+3].innerHTML
-        let row = [parseInt(totalOne), parseInt(totalTwo), parseInt(totalThree), parseInt(totalFour)]
+    for (let i=0; i <= 12; i+=4) {
+      let totalOne = squares[i].innerHTML
+      let totalTwo = squares[i+1].innerHTML
+      let totalThree = squares[i+2].innerHTML
+      let totalFour = squares[i+3].innerHTML
+      let row = [parseInt(totalOne), parseInt(totalTwo), parseInt(totalThree), parseInt(totalFour)]
 
-        let filteredRow = row.filter(num => num)
-        let missing = 4 - filteredRow.length
-        let zeros = Array(missing).fill(0)
-        let newRow = filteredRow.concat(zeros)
+      let filteredRow = row.filter(num => num)
+      let missing = 4 - filteredRow.length
+      let zeros = Array(missing).fill(0)
+      let newRow = filteredRow.concat(zeros)
 
-        squares[i].innerHTML = newRow[0]
-        squares[i +1].innerHTML = newRow[1]
-        squares[i +2].innerHTML = newRow[2]
-        squares[i +3].innerHTML = newRow[3]
-      }
+      squares[i].innerHTML = newRow[0]
+      squares[i+1].innerHTML = newRow[1]
+      squares[i+2].innerHTML = newRow[2]
+      squares[i+3].innerHTML = newRow[3]
     }
   }
 
@@ -123,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     checkForWin()
+    checkForGameOver()
   }
 
   function combineColumn() {
@@ -136,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     checkForWin()
+    checkForGameOver()
   }
 
   //assign functions to keyCodes
@@ -185,14 +183,36 @@ document.addEventListener('DOMContentLoaded', () => {
   function checkForWin() {
     for (let i=0; i < squares.length; i++) {
       if (squares[i].innerHTML == 2048) {
-        resultDisplay.innerHTML = 'You WIN'
+        resultDisplay.innerHTML = 'Você GANHOU!'
         document.removeEventListener('keyup', control)
         setTimeout(() => clear(), 3000)
       }
     }
   }
-  
-  //check if there are no zeros on the board to lose
+
+  function checkForGameOver() {
+    let zeros = 0
+    for (let i=0; i < squares.length; i++) {
+      if (squares[i].innerHTML == 0) {
+        zeros++
+      }
+    }
+    for (let i=0; i < 15; i++) {
+      if (squares[i].innerHTML === squares[i +1].innerHTML) {
+        zeros++
+      }
+    }
+    for (let i=0; i < 12; i++) {
+      if (squares[i].innerHTML === squares[i + width].innerHTML) {
+        zeros++
+      }
+    }
+    if (zeros === 0) {
+      resultDisplay.innerHTML = 'Você PERDEU!'
+      document.removeEventListener('keyup', control)
+      setTimeout(() => clear(), 3000)
+    }
+  }
 
   //clear timer
   function clear() {
@@ -202,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
   //add colours
   function addColours() {
     for (let i=0; i < squares.length; i++) {
-      let color = ['#afa192', '#eee4da', '#ede0c8', '#f2b179', '#ffcea4', '#e8c064', '#ffab6e', '#fd9982', '#ead79c', '#76daff', '#beeaa5', '#d7d4f0'];
+      let color = ['#eee4da', '#8789E0', '#E0813D', '#E03160', '#54E028', '#F2D455', '#39D1B1', '#D147C8', '#70464A', '#EFB094', '#EFB0EF', '#5FD0B0'];
       let num = [0, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048];
       for (let n=0; n < color.length; n++) {
         if (squares[i].innerHTML == num[n]) squares[i].style.backgroundColor = color[n];
