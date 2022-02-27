@@ -24,8 +24,10 @@ h1 {
 }
 
 .score-container {
-  text-align: center;
-  width: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 150px;
   height: 70px;
   border-radius: 3px;
   background-color: #665d55;
@@ -33,7 +35,7 @@ h1 {
 }
 
 .score-title {
-  font-size: 27px;
+  font-size: 25px;
 } 
 
 #score {
