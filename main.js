@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     if (zeros === 0) {
-      resultDisplay.innerHTML = 'Você PERDEU!'
+      resultDisplay.innerHTML = 'Você perdeu!'
       document.removeEventListener('keyup', control)
       setTimeout(() => clear(), 3000)
     }
