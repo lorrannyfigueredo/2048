@@ -21,12 +21,21 @@ document.addEventListener('DOMContentLoaded', () => {
   
   //generate a new number
   function generate() {
-    randomNumber = Math.floor(Math.random() * squares.length);
-    if (squares[randomNumber].innerHTML == 0) {
-      squares[randomNumber].innerHTML = 2;
-    } else {
-      generate()
-    }  
+    let calc = 0;
+    for (let i=0; i < width*width; i++) {
+      if (squares[i].innerHTML == 0) {
+        calc++
+      }
+    }
+    if (calc > 0 && calc <= 16) {
+      randomNumber = Math.floor(Math.random() * squares.length);
+      if (squares[randomNumber].innerHTML == 0) {
+        squares[randomNumber].innerHTML = 2;
+        checkForGameOver();
+      } else {
+        generate()
+      }  
+    }
   }
 
   function moveRight() {
@@ -110,16 +119,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function combineRow() {
     for (let i =0; i < 15; i++) {
-      if (squares[i].innerHTML === squares[i +1].innerHTML) {
-        let combinedTotal = parseInt(squares[i].innerHTML) + parseInt(squares[i +1].innerHTML);
-        squares[i].innerHTML = combinedTotal;
-        squares[i +1].innerHTML = 0;
-        score += combinedTotal;
-        scoreDisplay.innerHTML = score;
+      if (i != 3 && i != 7 && i != 11) {
+        if (squares[i].innerHTML === squares[i +1].innerHTML) {
+          let combinedTotal = parseInt(squares[i].innerHTML) + parseInt(squares[i +1].innerHTML);
+          squares[i].innerHTML = combinedTotal;
+          squares[i +1].innerHTML = 0;
+          score += combinedTotal;
+          scoreDisplay.innerHTML = score;
+        }
       }
     }
     checkForWin()
-    checkForGameOver()
   }
 
   function combineColumn() {
@@ -133,7 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     checkForWin()
-    checkForGameOver()
   }
 
   //assign functions to keyCodes
@@ -198,8 +207,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     for (let i=0; i < 15; i++) {
-      if (squares[i].innerHTML === squares[i +1].innerHTML) {
-        zeros++
+      if (i != 3 && i != 7 && i != 11) {
+        if (squares[i].innerHTML === squares[i +1].innerHTML) {
+          zeros++
+        }
       }
     }
     for (let i=0; i < 12; i++) {
