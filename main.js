@@ -21,13 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
   
   //generate a new number
   function generate() {
-    let calc = 0;
+    let calc = false;
     for (let i=0; i < width*width; i++) {
       if (squares[i].innerHTML == 0) {
-        calc++
+        calc = true;
       }
     }
-    if (calc > 0 && calc <= 16) {
+    if (calc) {
       randomNumber = Math.floor(Math.random() * squares.length);
       if (squares[randomNumber].innerHTML == 0) {
         squares[randomNumber].innerHTML = 2;
