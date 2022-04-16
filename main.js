@@ -200,25 +200,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function checkForGameOver() {
-    let zeros = 0
+    let zeros = true;
     for (let i=0; i < squares.length; i++) {
       if (squares[i].innerHTML == 0) {
-        zeros++
+        zeros = false;
       }
     }
     for (let i=0; i < 15; i++) {
-      if (i != 3 && i != 7 && i != 11) {
-        if (squares[i].innerHTML === squares[i +1].innerHTML) {
-          zeros++
-        }
+      if (i != 3 && i != 7 && i != 11 && squares[i].innerHTML === squares[i +1].innerHTML) {
+        zeros = false;
       }
     }
     for (let i=0; i < 12; i++) {
       if (squares[i].innerHTML === squares[i + width].innerHTML) {
-        zeros++
+        zeros = false;
       }
     }
-    if (zeros === 0) {
+    if (zeros) {
       resultDisplay.innerHTML = 'Você perdeu!'
       document.removeEventListener('keyup', control)
       setTimeout(() => clear(), 3000)
